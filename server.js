@@ -10,6 +10,7 @@ const path = require('path')
 const adminRouter = require('./routes/adminRoutes')
 const advisorRouter = require('./routes/advisorRoutes')
 const userRouter = require('./routes/customerRoutes')
+const stockRouter = require('./routes/stockRoutes/app')
     // const articleRouter = require('./routes/articles')
     // const otherUser = require('./routes/user')
     // const dotenv = require('dotenv');
@@ -69,10 +70,11 @@ app.set('views', path.join(__dirname, '/templates/views'))
 app.use('/admin', adminRouter)
 app.use('/advisor', advisorRouter)
 app.use('/user', userRouter)
-    // app.use('/articles', articleRouter)
-    //     // app.use('/user',otherUser)
+app.use(stockRouter)
 
 app.listen(port, () => { console.log(`App running from ${port} port`) })
+
+
 
 
 
