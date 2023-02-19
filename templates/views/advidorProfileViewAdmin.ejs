@@ -1,0 +1,191 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Profile</title>
+</head>
+
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="mt-3"> Advisor Profile</h1>
+        <h3 class="mt-3 text-capitalize">
+            <%= advisor.name %>
+        </h3>
+        <h3 class="mt-3">
+            <%= advisor.email %>
+        </h3>
+        <h3 class="mt-3">
+            <%= advisor.contactNo %>
+        </h3>
+        <h3>
+            skills :
+            <%= advisor.skills %>
+        </h3>
+        <h3>
+            experience:
+            <%= advisor.experience %>
+        </h3>
+        <h3>
+            About:
+            <%= advisor.about %>
+        </h3>
+        <a href="/advisor/updateProfile" class="mt-4">Update Your Profile</a>
+
+        <div>
+            <label for="form">Select Indices: </label>
+            <form action="/advisor/advisorIndices" method="post">
+                <input type="checkbox" id="intraday" name="intraday" value="">
+                <label for="intraday"> Intraday</label><br>
+                <input type="checkbox" id="swing" name="swing" value="">
+                <label for="swing"> Swing</label><br>
+                <input type="checkbox" id="future" name="future" value="">
+                <label for="future"> Future and Options</label><br><br>
+                <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+            </form>
+
+        </div>
+    </div>
+
+
+
+</body>
+
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/advisorProfile.css">
+    <title>Profile</title>
+</head>
+
+<body>
+    <!-- <div class="container text-center mt-5">
+        <h1 class="mt-3"> Advisor Profile</h1>
+        <h3 class="mt-3 text-capitalize"><%= advisor.name %> </h3>
+        <h3 class="mt-3"><%= advisor.email %> </h3>
+        <h3 class="mt-3"><%= advisor.contactNo %> </h3>
+    </div> -->
+
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" width="150px" height="200px" src="/css/christopher-campbell-Xo4YvBp6IBM-unsplash.jpg">
+                    <span class="font-weight-bold" style="text-transform: capitalize;"><%= advisor.name %></span>
+                    <span class="text-black-50"><%= advisor.email %></span>
+                    <span>
+                     </span>
+                </div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <!-- <h4 class="text-right">Your Profile</h4>
+                         -->
+                        <div class="mb-3 d-flex justify-content-between align-items-center experience"><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Your Details</span></div><br>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-md-6"><span>Name: </span>
+                            <span style="font-weight: 700;">
+                                <%=advisor.name %>
+                            </span>
+                        </div>
+                        <!-- <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div> -->
+                    </div><br>
+                    <div class="col-md-12">
+                        <div class="col-md-6"><span>Contact No: </span>
+                            <span style="font-weight: 700;">
+                                    <%=advisor.contactNo %>
+                                </span>
+                        </div>
+                    </div><br>
+                    <!-- <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="enter address" value=""></div> -->
+                    <div class="col-md-12">
+                        <div class="col-md-6"><span>Email:  </span>
+                            <span style="font-weight: 700;">
+                                    <%=advisor.email %>
+                                </span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-12">
+                        <div class="col-md-6 d-inline"><span>Indices:  </span>
+                            <% for(var i =0;i<3;i++) {  %>
+                                <span style="font-weight: 700;">
+                                    <!-- <%=advisor.indices[i] %> ,  -->
+                                    <span class="d-inline mb-3 justify-content-between align-items-center experience"><span class="border px-3 p-1 add-experience">&nbsp; <%=advisor.indices[i] %> </span></span>
+
+                                </span>
+
+                                <% } %>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-12"><label class="labels">Skills</label><input type="text" class="form-control" placeholder="Enter your skills" value="" name="skills"></div> -->
+
+                    <!-- <div class="row mt-3">
+                            <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
+                            <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
+                        </div> -->
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary profile-button m-3" type="submit"><a style="text-decoration: none; color: aliceblue;" href="/admin/acceptedAdvisor/<%= advisor._id %>" class="mt-4">Accept Profile</a></button>
+                        <button class="btn btn-primary profile-button m-3" type="submit"><a style="text-decoration: none; color: aliceblue;" href="/admin/rejectedAdvisor/<%= advisor._id %>" class="mt-4">Reject Profile</a></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="mb-3 d-flex justify-content-between align-items-center experience"><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
+                    <div class="col-md-6"><span>Experience:</span>
+                        <span style="font-weight: 700;">
+                                <%=advisor.experience %>(years)
+                            </span>
+                    </div>
+                    <br>
+                    <div class="col-md-6"><span>Sebi Certificate:
+                        <span><form class="form-div form-group" id="form">
+                            <span class="mx-4 my-3 btn btn-secondary" style="height: 34px;" type="submit" id="download_btn"><%=advisor.sebi %></span>
+                        </form>
+                        </span>
+                    </div>
+                    <br>
+                    <div><span>About:</span>
+                        <p style="font-weight: 700;">
+                            <%=advisor.about %>
+                        </p>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const formFields = document.querySelector('#form')
+
+        formFields.addEventListener('click', async(e) => {
+            e.preventDefault();
+            const fileName = e.target.innerText
+            console.log(fileName)
+
+            window.open(`/advisor/download/${fileName}`)
+        })
+    </script>
+</body>
+
+</html>
