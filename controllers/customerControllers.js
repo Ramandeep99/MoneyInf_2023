@@ -32,11 +32,11 @@ module.exports.login_get = (req, res) => {
     res.render('customerLogin');
 }
 
-// module.exports.register_get = (req, res) => {
-//     res.render('customerRegister');
-// }
+module.exports.register_get = (req, res) => {
+    res.render('customerRegister');
+}
 
-module.exports.advisorSendOTP = async(req, res) => {
+module.exports.customerSendOTP = async(req, res) => {
 
     const phone = req.body.contact;
     const otp = Math.floor(100000 + Math.random() * 900000);
@@ -60,76 +60,75 @@ module.exports.advisorSendOTP = async(req, res) => {
 };
 
 
-// module.exports.advisorVerifyOTP = async(req, res) => {
-//     const phone = req.body.phone;
-//     const hash = req.body.hash;
-//     const otp = req.body.otp;
-//     console.log(phone, hash, otp)
-//     let [hashValue, expires] = hash.split('.');
+module.exports.customerVerifyOTP = async(req, res) => {
+    const phone = req.body.phone;
+    const hash = req.body.hash;
+    const otp = req.body.otp;
+    console.log(phone, hash, otp)
+    let [hashValue, expires] = hash.split('.');
 
-//     let now = Date.now();
-//     if (now > parseInt(expires)) {
-//         return res.status(504).send({ msg: 'Timeout. Please try again' });
-//     }
-//     let data = `${phone}.${otp}.${expires}`;
-//     let newCalculatedHash = crypto.createHmac('sha256', smsKey).update(data).digest('hex');
-//     if (newCalculatedHash === hashValue) {
+    let now = Date.now();
+    if (now > parseInt(expires)) {
+        return res.status(504).send({ msg: 'Timeout. Please try again' });
+    }
+    let data = `${phone}.${otp}.${expires}`;
+    let newCalculatedHash = crypto.createHmac('sha256', smsKey).update(data).digest('hex');
+    if (newCalculatedHash === hashValue) {
 
-//         const advisor = await Details.findOne({ contactNo: phone })
-
-
-//         console.log('Advisor confirmed');
-//         const accessToken = jwt.sign({ data: phone }, JWT_AUTH_TOKEN, { expiresIn: '1000s' }); // this much time 
-//         const refreshToken = jwt.sign({ data: phone }, JWT_REFRESH_TOKEN, { expiresIn: '1y' });
-//         refreshTokens.push(refreshToken);
-
-//         if (advisor) {
-//             res
-//                 .status(202)
-//                 .cookie('accessToken', accessToken, {
-//                     expires: new Date(new Date().getTime() + 30 * 60 * 1000),
-//                     sameSite: 'strict',
-//                     httpOnly: true
-//                 })
-//                 .cookie('refreshToken', refreshToken, {
-//                     expires: new Date(new Date().getTime() + 31557600000),
-//                     sameSite: 'strict',
-//                     httpOnly: true
-//                 })
-//                 .cookie('authSession', true, { expires: new Date(new Date().getTime() + 30 * 1000), sameSite: 'strict' })
-//                 .cookie('refreshTokenID', true, {
-//                     expires: new Date(new Date().getTime() + 31557600000),
-//                     sameSite: 'strict'
-//                 })
-//                 .send({ msg: 'AdvisorFound' });
-//         } else {
-//             res
-//                 .status(202)
-//                 .cookie('accessToken', accessToken, {
-//                     expires: new Date(new Date().getTime() + 30 * 60 * 1000),
-//                     sameSite: 'strict',
-//                     httpOnly: true
-//                 })
-//                 .cookie('refreshToken', refreshToken, {
-//                     expires: new Date(new Date().getTime() + 31557600000),
-//                     sameSite: 'strict',
-//                     httpOnly: true
-//                 })
-//                 .cookie('authSession', true, { expires: new Date(new Date().getTime() + 30 * 1000), sameSite: 'strict' })
-//                 .cookie('refreshTokenID', true, {
-//                     expires: new Date(new Date().getTime() + 31557600000),
-//                     sameSite: 'strict'
-//                 })
-//                 .send({ msg: 'AdvisorNotFound' });
-//         }
+        const customer = await Details.findOne({ contactNo: phone })
 
 
-//     } else {
-//         console.log('not authenticated');
-//         return res.status(400).send({ verification: false, msg: 'Incorrect OTP' });
-//     }
-// };
+        console.log('Customer confirmed');
+        const accessToken = jwt.sign({ data: phone }, JWT_AUTH_TOKEN, { expiresIn: '1000s' }); // this much time 
+        const refreshToken = jwt.sign({ data: phone }, JWT_REFRESH_TOKEN, { expiresIn: '1y' });
+        refreshTokens.push(refreshToken);
 
+        if (customer) {
+            res
+                .status(202)
+                .cookie('accessToken', accessToken, {
+                    expires: new Date(new Date().getTime() + 30 * 60 * 1000),
+                    sameSite: 'strict',
+                    httpOnly: true
+                })
+                .cookie('refreshToken', refreshToken, {
+                    expires: new Date(new Date().getTime() + 31557600000),
+                    sameSite: 'strict',
+                    httpOnly: true
+                })
+                .cookie('authSession', true, { expires: new Date(new Date().getTime() + 30 * 1000), sameSite: 'strict' })
+                .cookie('refreshTokenID', true, {
+                    expires: new Date(new Date().getTime() + 31557600000),
+                    sameSite: 'strict'
+                })
+                .send({ msg: 'customerFound' });
+        } else {
+            res
+                .status(202)
+                .cookie('accessToken', accessToken, {
+                    expires: new Date(new Date().getTime() + 30 * 60 * 1000),
+                    sameSite: 'strict',
+                    httpOnly: true
+                })
+                .cookie('refreshToken', refreshToken, {
+                    expires: new Date(new Date().getTime() + 31557600000),
+                    sameSite: 'strict',
+                    httpOnly: true
+                })
+                .cookie('authSession', true, { expires: new Date(new Date().getTime() + 30 * 1000), sameSite: 'strict' })
+                .cookie('refreshTokenID', true, {
+                    expires: new Date(new Date().getTime() + 31557600000),
+                    sameSite: 'strict'
+                })
+                .send({ msg: 'customerNotFound' });
+        }
+
+
+    } else {
+        console.log('not authenticated');
+        return res.status(400).send({ verification: false, msg: 'Incorrect OTP' });
+    }
+};
 
 
 // module.exports.profile_get = async(req, res) => {
@@ -143,39 +142,37 @@ module.exports.advisorSendOTP = async(req, res) => {
 
 
 
-// module.exports.register_post = async(req, res) => {
+module.exports.register_post = async(req, res) => {
 
-//     try {
+    try {
+        const detail = new Details({
+            name: req.body.name,
+            email: req.body.email,
+            contactNo: req.body.contact,
+        })
+        console.log(detail)
+        const registered = await detail.save();
+        console.log(registered)
+        res.status(201).json({ registered: registered._id })
+    } catch (error) {
+        console.log(error)
+        res.send({ error });
+    }
+}
 
-//         const detail = new Details({
-//             name: req.body.name,
-//             email: req.body.email,
-//             contactNo: req.body.contact,
-//         })
-
-//         console.log(detail)
-//         const registered = await detail.save();
-//         console.log(registered)
-//         res.status(201).json({ registered: registered._id })
-//     } catch (error) {
-//         console.log(error)
-//         res.send({ error });
-//     }
-// }
-
-// module.exports.dashboard_get = (req, res) => {
-//     res.render('advisorDashboard');
-// }
+module.exports.dashboard_get = (req, res) => {
+    res.render('customerDashboard');
+}
 
 
-// module.exports.logout_get = (req, res) => {
-//     res
-//         .clearCookie('refreshToken')
-//         .clearCookie('accessToken')
-//         .clearCookie('authSession')
-//         .clearCookie('refreshTokenID')
-//         .redirect('/advisor')
-// }
+module.exports.logout_get = (req, res) => {
+    res
+        .clearCookie('refreshToken')
+        .clearCookie('accessToken')
+        .clearCookie('authSession')
+        .clearCookie('refreshTokenID')
+        .redirect('/user')
+}
 
 
 // module.exports.updateProfile_post = async(req, res) => {

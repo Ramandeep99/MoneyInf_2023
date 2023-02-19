@@ -202,7 +202,7 @@
             // console.log(otp, phone, hash)
 
             try {
-                const res = await fetch('/advisor/verifyOTP', {
+                const res = await fetch('/user/verifyOTP', {
                     method: "POST",
                     body: JSON.stringify({
                         otp,
@@ -230,11 +230,11 @@
                 //     }, 3000)
 
                 // }
-                if (data.msg == 'AdvisorNotFound') {
+                if (data.msg == 'customerNotFound') {
                     // location.assign('/advisor/dashboard');
-                    location.assign('/advisor/advisorRegister');
+                    location.assign('/user/customerRegister');
                 } else {
-                    location.assign('/advisor/dashboard')
+                    location.assign('/user/dashboard')
                 }
             } catch (err) {
                 console.log(err);
